@@ -17,9 +17,9 @@ def stub_view(request, *args, **kwargs):
 
 def list_view(request):
     published = Post.objects.exclude(published_date=None)
-    posts = published.order_by('-published_date')
-    context = {'posts': posts}
-    return render(request, 'list.html', context)
+    posts = published.order_by("-published_date")
+    context = {"posts": posts}
+    return render(request, "list.html", context)
 
 
 def detail_view(request, post_id):
@@ -27,7 +27,7 @@ def detail_view(request, post_id):
     try:
         post = published.get(pk=post_id)
     except Post.DoesNotExist:
-        print(f'Everybody PANIC (reason: {post_id}DNE)')
+        print(f"Everybody PANIC (reason: {post_id}DNE)")
         raise Http404
-    context = {'post': post}
-    return render(request, 'detail.html', context)
+    context = {"post": post}
+    return render(request, "detail.html", context)

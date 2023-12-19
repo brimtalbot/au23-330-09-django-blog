@@ -6,8 +6,8 @@ from .models import Poll
 
 
 def list_view(request):
-    context = {'polls': Poll.objects.all()}
-    return render(request, 'polling/list.html', context)
+    context = {"polls": Poll.objects.all()}
+    return render(request, "polling/list.html", context)
 
 
 def detail_view(request, poll_id):
@@ -23,5 +23,5 @@ def detail_view(request, poll_id):
             poll.score -= 1
         poll.save()
 
-    context = {'poll': poll}
-    return render(request, 'polling/detail.html', context)
+    context = {"poll": poll}
+    return render(request, "polling/detail.html", context)
