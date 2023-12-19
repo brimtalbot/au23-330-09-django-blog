@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
-from .models import Post
-from django.template import loader
+from rest_framework import viewsets, permissions
+from django.contrib.auth.models import User
+from .models import Category, Post
+import serializers
 
 
 def stub_view(request, *args, **kwargs):
@@ -20,6 +22,33 @@ def list_view(request):
     posts = published.order_by('-published_date')
     context = {'posts': posts}
     return render(request, 'list.html', context)
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = serializers.UserSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class PostViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Post.objects.all().order_by('-date_published')
+    serializer_class = serializers.PostSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = Category.objects.all()
+    serializer_class = serializers.CategorySerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 def detail_view(request, post_id):
